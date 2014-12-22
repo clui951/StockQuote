@@ -14,9 +14,9 @@ public class StockObj {
 		
 		// Set name of stock
 		int titleTag = this.html.indexOf("<title>", 0);
-		int nameFrom = this.html.indexOf("Summary for ", titleTag);
+		int nameFrom = this.html.indexOf("Summary for ", titleTag) + 12; //12 offset, start from after string
 		int nameTo = this.html.indexOf("- Yahoo! Finance", nameFrom);
-		String newName = this.html.substring(nameFrom + 12, nameTo);
+		String newName = this.html.substring(nameFrom, nameTo);
 		this.name = newName;
 	}
 
@@ -27,16 +27,16 @@ public class StockObj {
 			this.updateDate();
 			this.valid = true;
 		} catch (Exception e1) {
-			System.out.println(e1);
+			e1.printStackTrace();
 			this.valid = false;
 		}
 	}
 
 	protected void updatePrice() {
-		int startTag = this.html.indexOf("yfs_194", 0);
-		int priceFrom = this.html.indexOf( "\">", startTag);
+		int startTag = this.html.indexOf("yfs_l84", 0);
+		int priceFrom = this.html.indexOf( "\">", startTag) + 2; // 2 offset, start from after >
 		int priceTo = this.html.indexOf( "</span>", priceFrom);
-		String newPrice = this.html.substring( priceFrom + 1, priceTo);
+		String newPrice = this.html.substring( priceFrom, priceTo);
 		this.price = Double.parseDouble(newPrice);
 	}
 
