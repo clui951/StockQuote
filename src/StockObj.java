@@ -14,20 +14,21 @@ public class StockObj {
 		} catch (Exception e1) {}
 	}
 	
+	
 	public String getName() {
 		return this.name;
 	}
-	
 	public String getDate() {
 		return this.date;
-	}
-	
+	}	
 	public double getPrice() {
 		return this.price;
 	}
-	
 	public String getHtml() {
 		return this.html;
+	}	
+	public boolean valid() {
+		return this.valid;
 	}
 	
 	
