@@ -4,10 +4,25 @@ public class StockQuote {
 	public static void main(String[] args) {
 		System.out.println("Hello, World");
 		StockObj myStock = new StockObj("RHT");
-		System.out.println(myStock.getName());
-		System.out.println(myStock.isValid() + "\n");
-//		System.out.println(myStock.getHtml());
-		System.out.println(myStock.getPrice());
+		myStock.printStock();
+		
+		try {
+		    Thread.sleep(10000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		
+		myStock.updateQuote();
+		myStock.printStock();
+		
+		try {
+		    Thread.sleep(10000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		myStock.updateQuote();
+		myStock.printStock();
+		
 	}
 
 }

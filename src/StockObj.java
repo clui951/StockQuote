@@ -1,7 +1,7 @@
 public class StockObj {
 	protected String symbol;
 	protected String name;
-	protected String date;
+	protected String time;
 	protected double price;
 	protected String link;
 	protected String html;
@@ -11,7 +11,9 @@ public class StockObj {
 		this.symbol = symbol;
 		this.link = "http://finance.yahoo.com/q?s=" + symbol;
 		this.updateQuote();
-		
+		if ( !this.valid ) {
+			return;
+		}
 		// Set name of stock
 		int titleTag = this.html.indexOf("<title>", 0);
 		int nameFrom = this.html.indexOf("Summary for ", titleTag) + 12; //12 offset, start from after string
@@ -24,12 +26,21 @@ public class StockObj {
 		try {
 			this.html = GrabHTML.readHTML(this.link);
 			this.updatePrice();
-			this.updateDate();
+			this.updateTime();
 			this.valid = true;
 		} catch (Exception e1) {
-			e1.printStackTrace();
+//			e1.printStackTrace();
 			this.valid = false;
 		}
+	}
+	
+	public void printStock() {
+		if ( !this.valid ) {
+			System.out.println("--- DATA IS CURRENTLY INVALID ---");
+		}
+		System.out.println("\n" + this.name + " - " + this.symbol);
+		System.out.println(this.time);
+		System.out.println("$ " + this.price + "\n");
 	}
 
 	protected void updatePrice() {
@@ -40,8 +51,11 @@ public class StockObj {
 		this.price = Double.parseDouble(newPrice);
 	}
 
-	protected void updateDate() {
-
+	protected void updateTime() {
+		int p = html.indexOf("<span id=\"yfs_market_time\">", 0);
+		int dateFrom = html.indexOf(">", p) + 1; // 1 offset, start after >
+		int dateTo = html.indexOf("-", dateFrom); // end on hyphen, before market close time
+		this.time = html.substring(dateFrom, dateTo);
 	}
 
 	public String getSymbol() {
@@ -52,8 +66,8 @@ public class StockObj {
 		return this.name;
 	}
 
-	public String getDate() {
-		return this.date;
+	public String getTime() {
+		return this.time;
 	}
 
 	public double getPrice() {
