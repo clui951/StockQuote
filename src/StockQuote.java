@@ -1,28 +1,22 @@
 
 public class StockQuote {
 
+	static int LOOPS = 3;
+	
 	public static void main(String[] args) {
-		System.out.println("Hello, World");
+		System.out.println("Hello, Investor");
 		StockObj myStock = new StockObj("RHT");
 		myStock.printStock();
 		
-		try {
-		    Thread.sleep(10000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
+		for (int i = 0; i <= LOOPS; i++) {
+			try {
+			    Thread.sleep(5000);                 //10000 milliseconds is 5 seconds.
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
+			myStock.updateQuote();
+			myStock.printStock();
 		}
-		
-		myStock.updateQuote();
-		myStock.printStock();
-		
-		try {
-		    Thread.sleep(10000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
-		myStock.updateQuote();
-		myStock.printStock();
-		
 	}
 
 }
